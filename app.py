@@ -1,10 +1,6 @@
 import streamlit as st
 import torch
 from torch import nn
-from torchvision.transforms import functional as F
-from matplotlib import pyplot as plt
-import torchvision.utils as vutils
-from PIL import Image
 
 # Number of channels in the training images. For color images this is 3
 nc = 3
@@ -59,10 +55,12 @@ fake = model(fixed_noise)[0]
 print(fake.min(), fake.max())
 
 st.title("This person and anime does not exist!")
-placeholder = st.image(fake.mul(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to("cpu", torch.uint8).numpy(), caption="This person and anime does not exist!")
+placeholder = st.image(fake.mul(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to("cpu", torch.uint8).numpy(),
+                       caption="This person and anime does not exist!")
 
 if st.button("Press me!"):
     placeholder.empty()
     fixed_noise = torch.randn(1, nz, 1, 1, device="cpu")
     fake = model(fixed_noise)[0]
-    placeholder = st.image(fake.mul(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to("cpu", torch.uint8).numpy(), caption="This person and anime does not exist!")
+    placeholder = st.image(fake.mul(255).add_(0.5).clamp_(0, 255).permute(1, 2, 0).to("cpu", torch.uint8).numpy(),
+                           caption="This person and anime does not exist!")
